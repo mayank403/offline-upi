@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline UPI Payment Suite (*99# USSD & UPI 123PAY Simulator)</title>
+  <meta name="description" content="State-of-the-art interactive simulator for NPCI *99# NUUP USSD, UPI 123PAY IVR, and offline phone-based payments without mobile data or internet connectivity.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#10b981">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Top Global Header -->
+    <header class="global-header">
+      <div class="brand-zone">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Offline UPI Payment Suite</h1>
+          <p class="brand-sub">NPCI *99# (NUUP) USSD Engine &bull; UPI 123PAY IVR &bull; Zero-Data Protocol Simulation</p>
+        </div>
+      </div>
+      <div class="quick-controls-bar">
+        <div class="control-pill">
+          <span class="control-label">Internet Data</span>
+          <label class="switch">
+            <input type="checkbox" id="net-toggle" checked>
+            <span class="slider"></span>
+          </label>
+          <span class="mode-tag offline-text">OFFLINE (0 KB/s)</span>
+        </div>
+        <div class="control-pill">
+          <span class="control-label">Airplane Mode</span>
+          <label class="switch">
+            <input type="checkbox" id="airplane-toggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="control-pill">
+          <span class="control-label">Sound (DTMF)</span>
+          <label class="switch">
+            <input type="checkbox" id="sound-toggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <button id="btn-topup-balance" class="btn-action topup">
+          + Add ₹1,000 Demo
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Grid: Phone Shell (Left) + Telecom Protocol & Insights (Right) -->
+    <main class="main-content-grid">
+      <!-- Left: Virtual Mobile Device -->
+      <section class="phone-section" aria-label="Virtual Phone Simulator">
+        <div class="phone-bezel">
+          <!-- Outer Phone Frame -->
+          <div class="phone-body">
+            <!-- Hardware Details -->
+            <div class="phone-speaker"></div>
+            <div class="phone-dynamic-island">
+              <span class="island-camera"></span>
+            </div>
+
+            <!-- Screen Display -->
+            <div class="phone-screen">
+              <!-- Top Status Bar -->
+              <div class="phone-status-bar">
+                <div class="status-left">
+                  <span id="phone-time" class="status-time">10:14</span>
+                  <span id="carrier-display" class="carrier-name">Airtel</span>
+                </div>
+                <div class="status-right">
+                  <span id="signal-display" class="status-signal">📶 2G</span>
+                  <span id="data-badge" class="status-badge offline-ok">GSM Only (Offline)</span>
+                  <div class="battery-icon">
+                    <span class="battery-level"></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Main Screen Viewport (Tabbed) -->
+              <div class="screen-viewport">
+                <!-- TAB 1: USSD DIALPAD -->
+                <div id="tab-dialer" class="phone-screen-tab active">
+                  <div class="dialer-screen">
+                    <div class="dial-output-box">
+                      <div id="dial-display" class="dial-number">*99#</div>
+                      <div class="dial-sub-hint">National Unified USSD Platform</div>
+                    </div>
+
+                    <!-- Direct Shortcuts -->
+                    <div class="shortcuts-row">
+                      <button class="shortcut-chip" data-code="*99#" title="Open NUUP Main Menu">*99# (Main)</button>
+                      <button class="shortcut-chip" data-code="*99*1*1#" title="Send to Mobile">*99*1*1# (Mobile)</button>
+                      <button class="shortcut-chip" data-code="*99*3#" title="Direct Check Balance">*99*3# (Bal)</button>
+                      <button class="shortcut-chip" data-code="08045163666" title="UPI 123PAY Voice IVR">123PAY (IVR)</button>
+                    </div>
+
+                    <!-- 12-Key DTMF Dialpad -->
+                    <div id="dialpad-grid" class="dialpad-grid">
+                      <button class="key-btn" data-val="1"><span class="k-num">1</span><span class="k-sub">&bull;</span></button>
+                      <button class="key-btn" data-val="2"><span class="k-num">2</span><span class="k-sub">ABC</span></button>
+                      <button class="key-btn" data-val="3"><span class="k-num">3</span><span class="k-sub">DEF</span></button>
+                      <button class="key-btn" data-val="4"><span class="k-num">4</span><span class="k-sub">GHI</span></button>
+                      <button class="key-btn" data-val="5"><span class="k-num">5</span><span class="k-sub">JKL</span></button>
+                      <button class="key-btn" data-val="6"><span class="k-num">6</span><span class="k-sub">MNO</span></button>
+                      <button class="key-btn" data-val="7"><span class="k-num">7</span><span class="k-sub">PQRS</span></button>
+                      <button class="key-btn" data-val="8"><span class="k-num">8</span><span class="k-sub">TUV</span></button>
+                      <button class="key-btn" data-val="9"><span class="k-num">9</span><span class="k-sub">WXYZ</span></button>
+                      <button class="key-btn star" data-val="*"><span class="k-num">*</span><span class="k-sub"></span></button>
+                      <button class="key-btn" data-val="0"><span class="k-num">0</span><span class="k-sub">+</span></button>
+                      <button class="key-btn hash" data-val="#"><span class="k-num">#</span><span class="k-sub"></span></button>
+                    </div>
+
+                    <!-- Action Controls (Call / Backspace) -->
+                    <div class="dialer-actions">
+                      <div class="action-spacer"></div>
+                      <button id="btn-call" class="call-btn" title="Initiate USSD / Call">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                          <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
+                      </button>
+                      <button id="btn-backspace" class="backspace-btn" title="Backspace">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M21 4H8l-7 8 7 8h13a2 2 0 002-2V6a2 2 0 00-2-2z"/>
+                          <line x1="18" y1="9" x2="12" y2="15"/>
+                          <line x1="12" y1="9" x2="18" y2="15"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- TAB 2: SMART OFFLINE UPI APP -->
+                <div id="tab-smartapp" class="phone-screen-tab">
+                  <div class="smart-app-view">
+                    <!-- Bank Balance Card -->
+                    <div class="bank-card">
+                      <div class="bank-card-top">
+                        <span class="bank-label">OFFLINE PRIMARY ACCOUNT</span>
+                        <span class="bank-chip-badge">UPI LITE / USSD</span>
+                      </div>
+                      <div class="bank-balance-display">
+                        <span id="smart-balance-val" class="balance-number">₹5,420.50</span>
+                        <span class="balance-tag">Available Balance</span>
+                      </div>
+                      <div class="bank-card-footer">
+                        <span id="smart-acc-num">State Bank of India • XXXXXX4829</span>
+                        <span class="sim-verified">SIM Bound ✓</span>
+                      </div>
+                    </div>
+
+                    <!-- Bank Selector -->
+                    <div class="form-row select-row">
+                      <label for="active-bank-select">Switch Linked Bank:</label>
+                      <select id="active-bank-select" class="bank-dropdown"></select>
+                    </div>
+
+                    <!-- Quick Pay Offline Beneficiaries -->
+                    <div class="smart-section-header">
+                      <h3>Offline Beneficiaries</h3>
+                      <span class="sub-text">1-Tap Dial via *99#</span>
+                    </div>
+                    <div id="smart-contacts-grid" class="contacts-grid"></div>
+
+                    <!-- Add New Contact Offline -->
+                    <div class="add-contact-box">
+                      <h4>+ Save Beneficiary Offline</h4>
+                      <form id="add-contact-form" class="inline-form">
+                        <input type="text" id="new-contact-name" placeholder="Name" required>
+                        <input type="tel" id="new-contact-phone" placeholder="10-digit Mobile" required>
+                        <input type="text" id="new-contact-upi" placeholder="UPI ID (optional)">
+                        <button type="submit" class="btn-small-primary">Save Contact</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- TAB 3: OFFLINE QR SCANNER & DECODER -->
+                <div id="tab-qr" class="phone-screen-tab">
+                  <div class="qr-view">
+                    <div class="qr-header">
+                      <h3>Offline UPI QR Decoder</h3>
+                      <p>Translates merchant QR codes to *99# USSD payloads without internet!</p>
+                    </div>
+
+                    <!-- Sample Standees -->
+                    <div class="sample-standees-label">Select Sample Merchant Standee:</div>
+                    <div class="sample-standees-grid">
+                      <button class="sample-qr-btn" data-pa="sharmachai@ybl" data-pn="Sharma Chai Stall" data-am="20">
+                        ☕ Chai Stall (₹20)
+                      </button>
+                      <button class="sample-qr-btn" data-pa="ramesh.kirana@okhdfcbank" data-pn="Ramesh Kirana" data-am="150">
+                        🛒 Kirana Store (₹150)
+                      </button>
+                      <button class="sample-qr-btn" data-pa="amit.auto@icici" data-pn="Amit Verma Auto" data-am="60">
+                        🛺 City Auto (₹60)
+                      </button>
+                    </div>
+
+                    <!-- Decoded Result Box -->
+                    <div id="qr-decoded-box" class="qr-decoded-box hidden">
+                      <div class="qr-badge">QR DECODED OFFLINE</div>
+                      <div class="qr-info-row">
+                        <span class="label">Merchant:</span>
+                        <strong id="qr-preview-pn">Sharma Chai Stall</strong>
+                      </div>
+                      <div class="qr-info-row">
+                        <span class="label">UPI ID (VPA):</span>
+                        <span id="qr-preview-pa" class="vpa-text">sharmachai@ybl</span>
+                      </div>
+                      <div class="qr-info-row">
+                        <span class="label">Amount:</span>
+                        <span id="qr-preview-am" class="amt-text">₹20.00</span>
+                      </div>
+                      <div class="qr-mmi-suggestion-box">
+                        <span class="label">Synthesized USSD Code:</span>
+                        <code id="qr-mmi-suggestion">*99*1*2#</code>
+                      </div>
+                      <button id="btn-exec-qr-ussd" class="btn-action primary-glow full-width">
+                        🚀 Pay Merchant via *99# USSD
+                      </button>
+                    </div>
+
+                    <!-- Custom UPI Form -->
+                    <div class="custom-qr-container">
+                      <h4>Or Enter Merchant UPI Manually</h4>
+                      <form id="custom-qr-form">
+                        <input type="text" id="qr-input-pn" placeholder="Merchant Name" required>
+                        <input type="text" id="qr-input-pa" placeholder="UPI ID (e.g. store@axis)" required>
+                        <input type="number" id="qr-input-am" placeholder="Amount in ₹" required>
+                        <button type="submit" class="btn-small-primary full-width">Decode for *99#</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- TAB 4: OFFLINE PASSBOOK / LEDGER -->
+                <div id="tab-passbook" class="phone-screen-tab">
+                  <div class="passbook-view">
+                    <div class="passbook-header">
+                      <h3>Local Offline Passbook</h3>
+                      <span class="passbook-sub">SIM-Verified Carrier Records</span>
+                    </div>
+                    <div id="passbook-list" class="passbook-list"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom Phone Navigation -->
+              <nav class="phone-bottom-nav">
+                <button class="phone-tab-btn active" data-tab="dialer">
+                  <span class="tab-icon">🔢</span>
+                  <span class="tab-label">Dialpad</span>
+                </button>
+                <button class="phone-tab-btn" data-tab="smartapp">
+                  <span class="tab-icon">⚡</span>
+                  <span class="tab-label">Smart Pay</span>
+                </button>
+                <button class="phone-tab-btn" data-tab="qr">
+                  <span class="tab-icon">📷</span>
+                  <span class="tab-label">Offline QR</span>
+                </button>
+                <button class="phone-tab-btn" data-tab="passbook">
+                  <span class="tab-icon">📖</span>
+                  <span class="tab-label">Passbook</span>
+                </button>
+              </nav>
+
+              <!-- NATIVE TELECOM USSD POPUP MODAL -->
+              <div id="ussd-modal" class="ussd-modal-overlay">
+                <div class="ussd-dialog-box">
+                  <div class="ussd-carrier-tag">
+                    <span class="dot-live"></span>
+                    <span>CARRIER USSD SESSION</span>
+                  </div>
+                  <div id="ussd-loading-indicator" class="ussd-loading hidden">
+                    <div class="spinner"></div>
+                    <span>USSD code running...</span>
+                  </div>
+                  <div id="ussd-prompt-text" class="ussd-prompt"></div>
+                  <div id="ussd-input-container" class="ussd-input-wrapper">
+                    <input type="text" id="ussd-user-input" class="ussd-input" autocomplete="off" autofocus>
+                  </div>
+                  <div class="ussd-dialog-buttons">
+                    <button id="ussd-btn-cancel" class="ussd-btn cancel">Cancel</button>
+                    <button id="ussd-btn-send" class="ussd-btn send">Send</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- UPI 123PAY IVR VOICE CALL MODAL -->
+              <div id="ivr-modal" class="ivr-modal-overlay">
+                <div class="ivr-call-screen">
+                  <div class="ivr-header">
+                    <div class="ivr-caller-id">UPI 123PAY Gateway</div>
+                    <div class="ivr-number">080 4516 3666 (Toll-Free Voice)</div>
+                    <div id="ivr-timer" class="ivr-timer">00:00</div>
+                  </div>
+
+                  <div class="ivr-waves-container">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                  </div>
+
+                  <div id="ivr-prompt-text" class="ivr-speech-text">
+                    Connecting to NPCI Voice IVR...
+                  </div>
+
+                  <!-- Quick in-call DTMF responses -->
+                  <div class="ivr-keypad-shortcuts">
+                    <div class="ivr-shortcuts-hint">Voice Call Keypad:</div>
+                    <div class="ivr-grid">
+                      <button class="ivr-key-btn" data-val="1">1 (Transfer / Eng)</button>
+                      <button class="ivr-key-btn" data-val="2">2 (Balance / Hin)</button>
+                      <button class="ivr-key-btn" data-val="9">9 (Ramesh Kirana)</button>
+                      <button class="ivr-key-btn" data-val="#"># (Submit)</button>
+                    </div>
+                  </div>
+
+                  <div class="ivr-actions">
+                    <button id="ivr-btn-end" class="ivr-end-call-btn">
+                      <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                        <path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85-.18.18-.43.28-.7.28-.28 0-.53-.11-.71-.29L.29 13.08a.99.99 0 010-1.41C2.38 9.61 6.89 8 12 8s9.62 1.61 11.71 3.67c.39.39.39 1.02 0 1.41l-2.48 2.48c-.18.18-.43.29-.71.29-.27 0-.52-.1-.7-.28-.79-.74-1.69-1.36-2.67-1.85-.33-.16-.56-.5-.56-.9v-3.1C15.15 9.25 13.6 9 12 9z"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div><!-- .phone-screen -->
+          </div><!-- .phone-body -->
+        </div><!-- .phone-bezel -->
+      </section>
+
+      <!-- Right: Telecommunication & NPCI Architecture Center -->
+      <section class="telecom-section" aria-label="Protocol Inspector and Architecture">
+        <div class="telecom-card">
+          <div class="section-top-bar">
+            <h2>Real-Time GSM & NPCI Protocol Flow</h2>
+            <div class="carrier-chips">
+              <span class="chip-label">Carrier:</span>
+              <button class="carrier-btn active" data-carrier="Airtel">Airtel</button>
+              <button class="carrier-btn" data-carrier="Jio">Jio</button>
+              <button class="carrier-btn" data-carrier="Vi">Vodafone Idea</button>
+              <button class="carrier-btn" data-carrier="BSNL">BSNL</button>
+            </div>
+          </div>
+
+          <!-- Protocol Node Pipeline Diagram -->
+          <div class="pipeline-diagram">
+            <div id="node-handset" class="net-node">
+              <div class="node-icon">📱</div>
+              <div class="node-name">Mobile Station</div>
+              <div class="node-sub">SDCCH Signalling</div>
+            </div>
+            <div class="net-arrow">&rarr;</div>
+
+            <div id="node-msc" class="net-node">
+              <div class="node-icon">📡</div>
+              <div class="node-name">Telecom MSC / VLR</div>
+              <div class="node-sub">MAP SS7 Switch</div>
+            </div>
+            <div class="net-arrow">&rarr;</div>
+
+            <div id="node-ussd-gw" class="net-node">
+              <div class="node-icon">⚡</div>
+              <div class="node-name">USSD Gateway</div>
+              <div class="node-sub">HLR / Session Mgr</div>
+            </div>
+            <div class="net-arrow">&rarr;</div>
+
+            <div id="node-npci" class="net-node">
+              <div class="node-icon">🏛️</div>
+              <div class="node-name">NPCI NUUP</div>
+              <div class="node-sub">National Switch</div>
+            </div>
+            <div class="net-arrow">&rarr;</div>
+
+            <div id="node-cbs" class="net-node">
+              <div class="node-icon">🏦</div>
+              <div class="node-name">Bank CBS</div>
+              <div class="node-sub">Core Banking System</div>
+            </div>
+          </div>
+
+          <!-- Live Network Event Log -->
+          <div class="protocol-console-container">
+            <div class="console-header">
+              <div class="console-title">
+                <span class="live-dot"></span>
+                <span>Live SS7 / MAP Signalling & USSD Event Stream</span>
+              </div>
+              <button id="btn-clear-logs" class="btn-tiny">Clear Log</button>
+            </div>
+            <div id="protocol-timeline" class="protocol-timeline">
+              <div class="log-entry info">
+                <span class="log-time">10:14:02</span>
+                <span class="log-stage badge-info">SYSTEM_INIT</span>
+                <span class="log-text">GSM SIM Bound. Ready for *99# NUUP session over standalone signalling channel (SDCCH).</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Architecture & Educational Tabs -->
+          <div class="architecture-docs">
+            <div class="doc-tabs">
+              <div class="doc-tab-card">
+                <h3>💡 Why *99# Works Without Internet</h3>
+                <p>USSD (Unstructured Supplementary Service Data) operates exclusively over the <strong>signalling channel (SDCCH)</strong> of the GSM cellular network, completely bypassing packet-switched mobile data (GPRS/3G/4G/5G). It functions even when mobile data is toggled OFF or in areas with 0 bars of internet.</p>
+              </div>
+
+              <div class="doc-tab-card">
+                <h3>🛡️ Security & Zero Handset Storage</h3>
+                <p>Unlike browser or internet app caching, USSD dialogues are session-based. The moment a user closes the USSD dialog, no financial or PIN data remains stored in the handset memory. Dual-factor authentication is tied to the physical SIM card (IMSI) + 4/6-digit NPCI UPI PIN.</p>
+              </div>
+
+              <div class="doc-tab-card">
+                <h3>📋 NPCI Official MMI Shortcode Table</h3>
+                <ul class="shortcode-list">
+                  <li><code>*99#</code> &mdash; Main Menu (NUUP Portal)</li>
+                  <li><code>*99*1*1#</code> &mdash; Send Money directly via Mobile Number</li>
+                  <li><code>*99*1*2#</code> &mdash; Send Money directly via UPI ID (VPA)</li>
+                  <li><code>*99*3#</code> &mdash; Check Account Balance directly</li>
+                  <li><code>*99*7#</code> &mdash; Fetch Mini-Statement / Recent Txns</li>
+                  <li><code>080 4516 3666</code> &mdash; UPI 123PAY Interactive Voice Call</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- .telecom-card -->
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('ServiceWorker registered:', reg.scope))
+          .catch(err => console.warn('ServiceWorker registration failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>

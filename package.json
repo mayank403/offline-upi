@@ -1,0 +1,12 @@
+{
+  "name": "offline-upi-ussd-simulator",
+  "version": "1.0.0",
+  "description": "High-fidelity Offline UPI Payment System simulating NPCI *99# NUUP USSD, UPI 123PAY, and Smart MMI Dialer without internet connectivity",
+  "scripts": {
+    "start": "python -m http.server 3000",
+    "dev": "python -m http.server 3000"
+  },
+  "keywords": ["upi", "offline-upi", "ussd", "nuup", "npci", "fintech", "telecom"],
+  "author": "Antigravity",
+  "license": "MIT"
+}
