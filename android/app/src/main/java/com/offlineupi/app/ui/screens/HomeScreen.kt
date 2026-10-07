@@ -31,6 +31,7 @@ import com.offlineupi.app.data.OfflineStorage
 import com.offlineupi.app.telephony.UssdController
 import com.offlineupi.app.ui.theme.*
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen() {
     val context = LocalContext.current
